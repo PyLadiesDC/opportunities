@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>{{ single_post.name }}</h2>
+<ul>
+	<p><em>{{ single_post.created_at }}</em></p>
+	<p>{{ single_post.content }}</p>
+	<p>Name: {{ single_post.name }}</p>
+	<p>Phone: {{ single_post.phone }} </p>
+	<br>
+	<p>
+	{% if single_post.image %}
+		<img src="/media/{{ single_post.image }}">
+	{% endif %}
+	</p>
+	</ul>
+<p> Had enough? Return <a href="/opportunities_app">home</a>.<br/>
+{% endblock %}

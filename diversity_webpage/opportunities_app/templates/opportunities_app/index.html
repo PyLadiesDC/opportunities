@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<h1>Bloggy: a blog app</h1>
+{% if latest_posts %}
+<ul>
+{% for post in latest_posts %}
+	<li>{{post.created_at}} | {{post.name}} | {{post.content}}</li>
+{% endfor %}
+</ul>
+{% endif %}

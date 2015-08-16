@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-8">
+		{% if latest_posts %}
+		<ul>
+			{% for post in latest_posts %}
+				<h3><a href="/opportunities_app/{{ post.url }}">{{ post.name }}</a></h3>
+				<p><em>{{ post.created_at }}</em></p>
+				<p>{{ post.content }}</p>
+				<br>
+			{% endfor %}
+		</ul>
+		{% endif %}
+	</div>
+{% endblock %}
