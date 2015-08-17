@@ -1,0 +1,26 @@
+{% extends "jobopp/base.html" %}
+
+{% block content %}
+    <div class="post">
+        {% if post.published_date %}
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+        {% endif %}
+        <a class="btn btn-default" href="{% url "post_edit" pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.name }}</p>
+        <p>{{ post.address }}</p>
+        <p>{{ post.city }}</p>
+        <p>{{ post.state }}</p>
+				<p>{{ post.poc }}</p>
+				<p>{{ post.email }}</p>
+				<p>{{ post.phone }}</p>
+				<p>{{ post.term }}</p>
+				<p>{{ post.salary }}</p>
+				<p>{{ post.skills }}</p>
+
+
+        <p>{{ post.description|linebreaks }}</p>
+    </div>
+{% endblock %}
