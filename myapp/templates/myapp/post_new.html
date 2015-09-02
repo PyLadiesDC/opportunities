@@ -1,0 +1,15 @@
+<html>
+<head>
+<title> Post your job opportunity </title>
+</head>
+<body>
+<h1>
+Welcome! Post your job here
+</h1>
+<form method="POST" class="post-form"> {% csrf_token %}
+{{ form.as_p }}
+<button type="submit" class="save btn btn-default">Save</button>
+</form>
+</body>
+
+</html>

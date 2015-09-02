@@ -1,0 +1,22 @@
+<html>
+<head>
+<title> Job Postings </title>
+</head>
+<body>
+<h1>
+All posted jobs
+</h1>
+<p>
+{% for post in jobposts %}<br />
+<b>COMPANY: </b>{{ post.company }}<br />
+<b>EMAIL: </b>{{ post.email }}<br />
+<b>JOB DESINATION: </b>{{ post.job_designation }}<br />
+<b>JOB DESCRIPTION: </b>{{ post.job_description }}<br />
+<b>INDUSTRY: </b>{{ post.industry }}<br />
+___________________________________________
+{% endfor %}
+
+</p>
+</body>
+
+</html>
