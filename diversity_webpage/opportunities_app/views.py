@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import Context, loader, RequestContext
 from django.shortcuts import get_object_or_404, render_to_response, redirect
+from django.views.generic import ListView
 
 from opportunities_app.models import Post
 from opportunities_app.forms import PostForm
@@ -40,3 +41,11 @@ def add_post(request):
 	else:
 		form = PostForm()
 	return render_to_response('opportunities_app/add_post2.html', {'form' : form}, context)
+
+
+
+class PostListView(ListView):
+    template_name = 'opportunities_app/list_posts.html'
+    model = Post
+    context_object_name = 'posts'
+    paginate_by = 10

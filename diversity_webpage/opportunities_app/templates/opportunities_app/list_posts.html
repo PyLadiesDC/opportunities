@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-8">
+		{% if posts %}
+		<ul>
+			{% for post in posts %}
+				<h3><a href="/opportunities_app/{{ post.url }}">{{ post.name }}</a></h3>
+                <em>{% if post.organization_name %}{{ post.organization_name }}{% endif %}</em>
+
+                <h4>Description</h4>
+				<p>{{ post.content }}</p>
+
+                {% if post.benefits %}
+                    <h4>Benefits</h4>
+                    <p>{{ post.benefits }}</p>
+                {% endif %}
+
+                <p><small><em>Posted {{ post.created_at|timesince }} ago</em></small></p>
+                <br>
+			{% endfor %}
+		</ul>
+		{% endif %}
+
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="/cars?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="/cars?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+
+	</div>
+{% endblock %}

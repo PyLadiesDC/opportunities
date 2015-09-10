@@ -6,7 +6,7 @@ class PostForm(forms.ModelForm):
 
 	class Meta:
 		model = Post
-		fields = ['name', 'address', 'point_of_contact', 'phone', 'email', 'content']
+		fields = ['name', 'address', 'point_of_contact', 'email', 'content']
 		#each field has to have an associate column in the database
 
 
