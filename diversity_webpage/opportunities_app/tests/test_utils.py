@@ -26,6 +26,13 @@ class TestTokenUtils(TestCase):
     token = post.token
     assert not ensure_token_uniqueness(token), "Token was unique despite not being"
 
+
+  def test_token_rotation(self):
+    post = PostFactory()
+    token = post.token
+    post.refresh_token()
+    assert not post.token == token
+
   def tearDown(self):
     pass
 
