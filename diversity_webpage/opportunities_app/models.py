@@ -1,5 +1,22 @@
 from django.db import models
+from django.db.models.signals import pre_save
 
+from opportunities_app.utils import create_token, ensure_token_uniqueness
+
+"""
+# Workflow:
+## Job posting creation
+User requests token for job post creation and provides email
+User receives email
+User uses email link to get to website to update and create
+
+
+## Recovery:
+User browses to specific job
+Requests token refresh
+See job posting creation workflow
+
+"""
 
 class Post(models.Model):
   """
@@ -10,6 +27,8 @@ class Post(models.Model):
     ('h', 'Hourly'),
     ('s', 'Salary')
   )
+
+  token = models.CharField(max_length=100, unique=True)
 
   archived = models.BooleanField(default=False)
   created_at = models.DateTimeField(auto_now_add=True)
@@ -40,4 +59,22 @@ class Post(models.Model):
   def __unicode__(self):
     return self.name if self.name else None
 
+  def refresh_token(self):
+    new_token = create_token()
+    while not ensure_token_uniqueness(new_token):
+        new_token = create_token()
+    self.token = new_token
+
+
+def create_token_on_new_post(sender, instance, **kwargs):
+    """
+    New posts won't have tokens. We refresh their token.
+    """
+    import ipdb; ipdb.set_trace()
+    if kwargs['created']:
+        instance.refresh_token()
+
+
+pre_save.connect(create_token_on_new_post, sender=Post,
+    dispatch_uid='Token_on_creation')
 
