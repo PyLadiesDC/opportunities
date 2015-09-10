@@ -2,3 +2,4 @@ Django==1.8.4
 django_forms_bootstrap
 django-localflavor==1.1
 gunicorn==19.3.0
+psycopg2==2.6.1
