@@ -18,7 +18,7 @@ class PostForm(forms.ModelForm):
 
 class EmailForm(forms.Form):
     name = forms.CharField()
-    email = forms.CharField()
+    email = forms.EmailField()
     email_text = forms.CharField(widget=forms.Textarea, label='Email/Application Text')
 
     def send_mail(self, post):
