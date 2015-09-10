@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.template import Context, loader, RequestContext
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.views.generic import ListView
-from django.core.mail import send_mail
 
 from opportunities_app.models import Post
 from opportunities_app.forms import PostForm, EmailForm
@@ -53,23 +52,18 @@ class PostListView(ListView):
     paginate_by = 10
 
 
-# Sends an email with application information to the email provided by the employer
-def send_application(request, post_id):
-    if request.method == 'POST':
-        form = EmailForm(request.POST)
-        if form.is_valid():
-            obj = Post.objects.get(pk=post_id)  #Queries database to get the employer information
-            contact_email = obj.email  # Contact email
-            applicant_name = form.name
-            applicant_email = form.email
-            applicant_text = form.email_text + '<br/></br>' + applicant_name + "<br/>" + applicant_email # Be sure applicant and email are sent to the contact
-            send_mail('New Applicant from Opportunities!', applicant_text, 'from@example.com',
-                [contact_email], fail_silently=False) #Send email to the contact!
 
-        else:
-            print form.errors
-    else:
-        form = EmailForm()
+class PostFormView(FormView):
+    form = EmailForm
+    template_name = 'opportunities_app/email.html'
 
-    return render(request, 'opportunities_app/email.html', {'form' : form, 'post_id': post_id})
+    def form_valid(self, form):
+        post_id = self.request.GET['post_id']
+        obj = get_object_or_404(Post, pk=post_id)
+        form.send_mail(obj)
+        return super(PostFormView, self).form_valid(form)
 
+    def get_context_data(self, request, *args, **kwargs):
+        ctx = super(PostFormView, self).get_context_data(request, *args, **kwargs)
+        ctx['post_id'] = self.request.GET['post_id']
+        return ctx
