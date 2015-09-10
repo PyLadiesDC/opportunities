@@ -3,20 +3,6 @@ from django.db.models.signals import pre_save
 
 from opportunities_app.utils import create_token, ensure_token_uniqueness
 
-"""
-# Workflow:
-## Job posting creation
-User requests token for job post creation and provides email
-User receives email
-User uses email link to get to website to update and create
-
-
-## Recovery:
-User browses to specific job
-Requests token refresh
-See job posting creation workflow
-
-"""
 
 class Post(models.Model):
   """
@@ -43,10 +29,8 @@ class Post(models.Model):
   name = models.CharField(max_length=100, help_text='Title of the job post')
   organization_name = models.CharField(max_length=100, blank=True, null=True,
     help_text='Name of company or organization')
-  compensation_type = models.CharField(max_length=1, choices=COMPENSATION_TYPES,
-    help_text='Type of compensation')
-  compensation_amount = models.CharField(max_length=50,
-    help_text='Dollars/time period')
+  is_compensated = models.BooleanField(help_text="Is this opportunity paid?", default=False)
+  compensation = models.TextField(help_text="What is the pay?", blank=True, null=True)
   content = models.TextField(help_text='What is the job description?')
   benefits = models.TextField(help_text='What are the benefits this opportunity\
     provides.', blank=True, null=True)
@@ -70,7 +54,6 @@ def create_token_on_new_post(sender, instance, **kwargs):
     """
     New posts won't have tokens. We refresh their token.
     """
-    import ipdb; ipdb.set_trace()
     if kwargs['created']:
         instance.refresh_token()
 

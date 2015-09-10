@@ -25,7 +25,7 @@ TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, 'templates'),)
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -112,6 +113,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+# For local development, create settings_local.py and set SECRET_KEY='<some random text here>'
 try:
     from settings_local import *
 except:
