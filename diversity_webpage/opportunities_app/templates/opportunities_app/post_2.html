@@ -5,15 +5,20 @@
 <h2>{{ single_post.name }}</h2>
 <ul>
 	<p><em>{{ single_post.created_at }}</em></p>
-	<p>{{ single_post.content }}</p>
-	<p>Name: {{ single_post.name }}</p>
-{#	<p>Phone: {{ single_post.phone }} </p> Removed phone as a field in the model#}
-	<br>
+    <p>{{ single_post.content }}</p>
+    <p><strong>Benefits: </strong>{{ single_post.benefits }}</p>
+    <p><strong>Expiration: </strong>{{ single_post.expiration }}</p>
+    <p><strong>Contact Name: </strong>{{ single_post.point_of_contact }}</p>
+    <p><strong>Organization: </strong>{{ single_post.organization_name }}</p>
+    <p><strong>Address: </strong>{{ single_post.address }}</p>
+    <p>This position has a {{ single_post.get_compensation_type_display|lower }} compensation model with a rate of ${{ single_post.compensation_amount }}</p>
+
 	<p>
 	{% if single_post.image %}
 		<img src="/media/{{ single_post.image }}">
 	{% endif %}
 	</p>
+    <p><strong><a href="/opportunities_app/apply/{{ single_post.pk }}">Apply</a></strong></p>
 	</ul>
 <p> Had enough? Return <a href="/opportunities_app">home</a>.<br/>
 {% endblock %}
