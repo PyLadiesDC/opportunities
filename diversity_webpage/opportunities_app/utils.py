@@ -6,7 +6,7 @@ def create_token(n=70):
   """
   Creates a new token that is hopefully unique.
   """
-  return binascii.hexlify(os.urandom(n))
+  return binascii.hexlify(os.urandom(n))[0:n]
 
 
 def ensure_token_uniqueness(new_token):

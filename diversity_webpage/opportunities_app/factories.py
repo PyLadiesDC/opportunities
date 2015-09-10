@@ -11,12 +11,12 @@ class PostFactory(factory.django.DjangoModelFactory):
   email = 'email@example.org'
   point_of_contact = 'John Doe'
 
-  name = factory.Sequence(lambda: 'Test Job Posting %n' % n)
-  organization_name = factory.Sequence(lambda: 'Company %n' % n)
-  compensation_type = FuzzyChoice(Post.COMPENSATION_TYPES)
+  name = factory.Sequence(lambda n: 'Test Job Posting {0}'.format(n))
+  organization_name = factory.Sequence(lambda n: 'Company {0}'.format(n))
+  is_compensated = True
+  compensation = 50
   content = 'This is some content for a job posting.'
   benefits = 'Here are some additional things.'
-  compensation_amount = '$50/hr'
 
   class Meta:
     model = Post

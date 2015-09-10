@@ -8,6 +8,7 @@ class Post(models.Model):
   """
   A job posting.
   """
+
   ''' Types of salary compensation '''
   COMPENSATION_TYPES = (
     ('h', 'Hourly'),
@@ -54,7 +55,7 @@ def create_token_on_new_post(sender, instance, **kwargs):
     """
     New posts won't have tokens. We refresh their token.
     """
-    if kwargs['created']:
+    if instance.token == '':
         instance.refresh_token()
 
 

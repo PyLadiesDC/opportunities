@@ -15,10 +15,10 @@ class TestTokenUtils(TestCase):
   def test_create_token_custom_length(self):
     n = 50
     token = create_token(n)
-    assert len(token) == n, "Token was not proper length."
+    assert len(token) == n, "Token was not proper length. It was {0} when it should have been {1}".format(len(token), n)
 
   def test_create_token_fail_non_integer(self):
-    with self.assertRaises(TypeError, 'Integers, not strings'):
+    with self.assertRaises(TypeError):
        token = create_token('80')
 
   def test_ensure_token_uniqueness(self):
