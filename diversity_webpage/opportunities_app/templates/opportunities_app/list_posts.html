@@ -15,6 +15,13 @@
                 <h4>Description</h4>
 				<p>{{ post.content }}</p>
 
+                <h4>Compensation</h4>
+                {% if post.is_compensated %}
+                    <p>{{ post.compensation }}</p>
+                {% else %}
+                    <p>No compensation</p>
+                {% endif %}
+
                 {% if post.benefits %}
                     <h4>Benefits</h4>
                     <p>{{ post.benefits }}</p>
