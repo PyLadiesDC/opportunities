@@ -8,5 +8,5 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['name', 'address', 'point_of_contact', 'organization_name', 'email', 'expiration', 'content',
-                  'benefits', 'compensation_type', 'compensation_amount']
+                  'benefits']
         #each field has to have an associate column in the database
