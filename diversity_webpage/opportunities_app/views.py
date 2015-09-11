@@ -2,25 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import Context, loader, RequestContext
 from django.shortcuts import get_object_or_404, render_to_response, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, FormView
 
 from opportunities_app.models import Post
 from opportunities_app.forms import PostForm, EmailForm
 # Create your views here.
 
-def index(request):
-    latest_posts = Post.objects.all().order_by('-created_at')
-    t = loader.get_template('opportunities_app/index_4.html')
-    context_dict = {'latest_posts': latest_posts, }
-    for post in latest_posts:
-        post.url = post.name.replace(' ', '_')
-    c = Context(context_dict)
-    return HttpResponse(t.render(c))
-
-
-def post(request, post_url):
-    single_post = get_object_or_404(Post,
-        name=post_url.replace('_', ' '))
+def post(request, post_id):
+    single_post = get_object_or_404(Post, id=post_id)
     t = loader.get_template('opportunities_app/post_2.html')
     c = Context({'single_post' : single_post,})
     return HttpResponse(t.render(c))
@@ -37,7 +26,7 @@ def add_post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid(): # is the form valid?
             form.save(commit=True) #yes? save to database via commit and redirect user to the index page
-            return redirect(index)
+            return redirect('list')
         else:
             print form.errors #no? display errors to end user
     else:
@@ -52,18 +41,17 @@ class PostListView(ListView):
     paginate_by = 10
 
 
-
 class PostFormView(FormView):
-    form = EmailForm
+    form_class = EmailForm
     template_name = 'opportunities_app/email.html'
 
     def form_valid(self, form):
-        post_id = self.request.GET['post_id']
+        post_id = self.kwargs['post_id']
         obj = get_object_or_404(Post, pk=post_id)
         form.send_mail(obj)
         return super(PostFormView, self).form_valid(form)
 
-    def get_context_data(self, request, *args, **kwargs):
-        ctx = super(PostFormView, self).get_context_data(request, *args, **kwargs)
-        ctx['post_id'] = self.request.GET['post_id']
+    def get_context_data(self, **kwargs):
+        ctx = super(PostFormView, self).get_context_data(**kwargs)
+        ctx['post_id'] = self.kwargs['post_id']
         return ctx

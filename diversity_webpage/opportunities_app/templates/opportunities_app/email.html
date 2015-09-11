@@ -4,7 +4,7 @@
 {% block content %}
 {% load bootstrap_tags %}
 <h2>Send an Application</h2>
-<form id="post_form" method="post" action="/opportunities_app/apply/{{ post_id }}">
+<form id="post_form" method="post" action="{% url 'apply' post_id %}">
 	{% csrf_token %}
 
 	{{ form | as_bootstrap}}
