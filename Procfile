@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath diversity_webpage/ diversity_webpage.wsgi --log-file -

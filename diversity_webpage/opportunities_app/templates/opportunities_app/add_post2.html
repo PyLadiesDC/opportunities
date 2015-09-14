@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
 
+{% block  extrahead %}
+    <script>
+        $(function(){
+            $("#id_expiration").datepicker({dateFormat: 'yy-mm-dd'});
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
 {% load bootstrap_tags %}
 <h2> Add a Post</h2>
-<form id="post_form" method="post" action="/opportunities_app/add_post/" enctype="multipart/form-data">
+<form id="post_form" method="post" action="{% url 'add_post' %}" enctype="multipart/form-data">
 	{% csrf_token %}
 
 	{{ form | as_bootstrap}}

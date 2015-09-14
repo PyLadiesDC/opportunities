@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block content %}
+{% load bootstrap_tags %}
+<h2>Send an Application</h2>
+<form id="post_form" method="post" action="{% url 'apply' post_id %}">
+	{% csrf_token %}
+
+	{{ form | as_bootstrap}}
+
+	<input type="submit" name="submit" value="Submit Application!" class="btn btn-primary">
+</form>
+<br>
+{% endblock %}
